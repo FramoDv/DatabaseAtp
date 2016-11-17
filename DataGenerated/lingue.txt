@@ -1,0 +1,6 @@
+Italian,
+English, 
+Frances,
+Polish,
+Espanyol,
+Dutch

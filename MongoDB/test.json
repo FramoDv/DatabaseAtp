@@ -1,0 +1,47 @@
+/* creiamo la collecton */ 
+
+db.createCollection(“spett”);
+
+
+/* documento d' esempio */
+
+{
+	"_id":"Nx1lFRnOYoNm6G2A",
+	"nome":"Amy",
+	"cognome":"Greene",
+	"sesso":"F",
+	"eta":66,
+	"nazione":"SWI",
+	"residenza":"Milano",
+	"biglietti": {
+		"cod_b":"1B",
+		"stadio":{
+			"nome":"Blois-One",
+			"tetto":"Yes",
+			"superficie":"cemento",
+			"citta":"Blois"
+		},
+		"prezzo":30
+	}
+},
+
+/* per inserire dati nel db mongo */
+sudo /Users/Framo/mongodb/mongodb-osx-x86_64-3.2.5/bin/mongoimport --db atp --collection spett --drop --file /Users/Framo/Desktop/Programming/Mongo_db/spett.json
+
+
+/*-------------------- query --------------------*/
+
+// #16
+db.spett.find({"eta" : { $lt : 22 }}).count()
+
+// #24
+db.spett.find({"nazione" : "ITA").count()
+ /* indice */ db.spett.createIndex({ "nazione" : 1})
+
+
+// #25
+db.spett.aggregate([ 
+	{$match : { "eta" : { $lt : 22}}}, 
+	{$group : {"_id" : "$biglietti.prezzo" , "venduti" : {$sum : 1}}}, 
+	{$sort : {"venduti" : -1}}]).pretty()
+
